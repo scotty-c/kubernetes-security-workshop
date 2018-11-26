@@ -23,7 +23,7 @@ This is used to join worker nodes to the cluster. PLEASE NOTE !!!! Do not copy a
 
 
 To join a worker node we will use the `add new instance` button again. This will create another instance. Then in the terminal we will enter the join command.  
-`kubeadm join 192.168.0.13:6443 --token t4r35x.ekzswc2rigtldf2f --discovery-token-ca-cert-hash sha256:2de71debb1e103989a8c4619e7bc7799e48ebdc71fb2623c1d17857a33e71f5b` (NOTE PLEASE DO NOT COPY AND PASTE THIS LINE. USE YOUR JOIN TOKEN)  
+kubeadm join 192.168.0.13:6443 --token t4r35x.ekzswc2rigtldf2f --discovery-token-ca-cert-hash sha256:2de71debb1e103989a8c4619e7bc7799e48ebdc71fb2623c1d17857a33e71f5b` (NOTE PLEASE DO NOT COPY AND PASTE THIS LINE. USE YOUR JOIN TOKEN)  
 
 You will get the following output if you were successful 
 ![join](images/play-with-k8s/join.png)  
