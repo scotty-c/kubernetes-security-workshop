@@ -1,7 +1,7 @@
 # Minikube
 To use the workshop with minikube firstly install minikube. We assume that has already been done.  
 If you need to install minikube please follow the offfical documentation https://kubernetes.io/docs/tasks/tools/install-minikube/  
-Once the install is done, please use the below to start the cluster for your os 
+Once the install is done, please use the instructions below to start the cluster for your os 
 
 ## Linux 
 
