@@ -57,3 +57,119 @@ replace the gif link in line 19 with `https://media.giphy.com/media/DBfYJqH5Aokg
 Now check your browser !!!
 
 ## Lets protect our app
+Now we are going to look at setting some pod security  
+
+
+
+### Change the user the application runs as
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: scottyc/webapp:latest
+        ports:
+        - containerPort: 3000
+          hostPort: 3000
+        securityContext:
+          runAsUser: 1000
+EOF
+```
+
+### Read only file system
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: scottyc/webapp:latest
+        ports:
+        - containerPort: 3000
+          hostPort: 3000
+        securityContext:
+          readOnlyRootFilesystem: true
+EOF
+```
+### Disable privilege escalation 
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: scottyc/webapp:latest
+        ports:
+        - containerPort: 3000
+          hostPort: 3000
+        securityContext:
+          allowPrivilegeEscalation: false
+EOF
+```
+
+### All of them together
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: scottyc/webapp:latest
+        ports:
+        - containerPort: 3000
+          hostPort: 3000
+        securityContext:
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+EOF
+```
