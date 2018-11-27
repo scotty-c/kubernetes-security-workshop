@@ -56,12 +56,28 @@ replace the gif link in line 19 with `https://media.giphy.com/media/DBfYJqH5Aokg
 
 Now check your browser !!!
 
+lastly run `whoami` in the terminal
+
+Now lets exit out of the pod shell and delete our deployment `kubectl delete deployments.apps webapp-deployment`
+
 ## Lets protect our app
-Now we are going to look at setting some pod security  
+Now we are going to look at setting some pod security on our deployments which will control our pods.  
+Pod security policy is set in your deployment yaml under 
+```
+spec: 
+  containers:
+    securityContext:
+```  
 
-
+Pod security policy restricts what user the application is run as inside the pod, if the pod has a read only filesystem and lastly  
+but not least if you want to allow privilege escalation. By default the pod security context are not turned on. If you want to get a lot of  
+bang for your buck on the security front, this is the place to start. 
 
 ### Change the user the application runs as
+
+We will change our deployment.yaml this time to set the user to a random user 100. This will make sure that we dont have matching  
+uid to the underlying host.
+
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -88,8 +104,17 @@ spec:
           runAsUser: 1000
 EOF
 ```
+
+Once the deployment has finished we should we will again exec into the container as we did above and run `whoami` agian.
+What changed ?   
+now lets run `su` and then `whoami`
+
+Lets clean up again with `kubectl delete deployments.apps webapp-deployment`
 
 ### Read only file system
+
+In the original hack we defaced the website as we could modify the `index.html` file. One easy way to fix this is to make the filesystem read only.  
+Run the below deployment  
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -116,7 +141,18 @@ spec:
           readOnlyRootFilesystem: true
 EOF
 ```
+We will now try to modify the `index.html` file again as we did before. 
+Could you modify it ?  
+Now run `whoami` do you see the issue still?  
+Lets clean up again with `kubectl delete deployments.apps webapp-deployment`
+
 ### Disable privilege escalation 
+
+In my opinion you should have this setting on every deployment or pod. I cant think of a reason that your application would  
+need to escalate privilege. 
+
+Now lets deploy our application again 
+
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -144,7 +180,17 @@ spec:
 EOF
 ```
 
+We will exec into the pod again and run `whoami` 
+What user are you?
+
+Lets clean up again with `kubectl delete deployments.apps webapp-deployment`
+
 ### All of them together
+As we have seen there is holes in our security profile using all these contexts individually.
+What if we add all three together in the one deployment.
+
+Lets deploy our deployment again with the below example.
+
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -173,3 +219,8 @@ spec:
           allowPrivilegeEscalation: false
 EOF
 ```
+
+Once the deployment has completed exec into the pod and see what user you are.  
+Try to modify the `index.html` file.  
+Then lastly `su` to see if you can get root access.
+What did you find?
