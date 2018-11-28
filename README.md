@@ -21,10 +21,14 @@ This is the Kubernetes security workshop, we have three ways to run this worksho
 There are three methods to set up this workshop either to use in the classroom or after the workshop at your own pace. They are as follows  
 [Azure](setup/azure.md)  
 [Minikube](setup/minikube.md)  
-[Play with Kubernetes](setup/play-with-k8s.md) 
+[Play with Kubernetes](setup/play-with-k8s.md)
+
+Then familarise yourself with the application that we are going to [deploy](code/webapp/Dockerfile)  
+All the code lives [here](https://github.com/scotty-c/kubernetes-security-workshop/tree/master/code/webapp)
 
 ## Kubernetes architecture overview <a name="overview"></a>
-This module walks through the Kubernetes components and gives us a solid foundation for the rest of the workshop.
+This module walks through the Kubernetes components and gives us a solid foundation for the rest of the workshop.  
+
 
 ## Securing Kubernetes components <a name="components"></a>
 
