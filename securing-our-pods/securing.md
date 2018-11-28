@@ -1,6 +1,11 @@
 # Securing our pods.
 
 ## Deploying our application
+The first thing we will do in this lab is deploy our web application to our cluster using a Kubernetes deployment.  
+We will do that by issuing the below command
+
+Note we are creating the deployment.yaml and running it with a single command. It is the equivalent to running  
+`kubectl create -f <filename>.yaml`  
 
 ```
 cat <<EOF | kubectl apply -f -
