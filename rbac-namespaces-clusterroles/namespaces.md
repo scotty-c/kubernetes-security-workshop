@@ -6,7 +6,7 @@ within the cluster to run. So we will first look at namespaces to separate our a
 ## Namespaces
 
 Lets look at the default namespaces available to us.  
-We do this by issuing ` kubectl get namespaces`
+We do this by issuing `kubectl get namespaces`
 In the last lab we deployed our deployment to the default namespace as we did not define anything.
 Kubernetes will place any pods in the default namespace unless another one is specified.
 
@@ -19,3 +19,7 @@ metadata:
   name: workshop
 EOF
 ```
+
+Then if we check our namespaces again via `kubectl get namespaces` if we were successful then we should see the new namespace.
+
+## Cluster roles 

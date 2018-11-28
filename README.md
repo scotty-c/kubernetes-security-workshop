@@ -27,14 +27,16 @@ Then familarise yourself with the application that we are going to [deploy](code
 All the code lives [here](https://github.com/scotty-c/kubernetes-security-workshop/tree/master/code/webapp)
 
 ## Kubernetes architecture overview <a name="overview"></a>
-This module walks through the Kubernetes components and gives us a solid foundation for the rest of the workshop.  
-
+This module walks through the Kubernetes components and gives us a solid foundation for the rest of the workshop.    
+To run through the lab start [here](kubernetes-architecture/architecture.md)
 
 ## Securing Kubernetes components <a name="components"></a>
 
 ## Introduction to Apparmor <a name="apparmor"></a>
 
 ## Securing our pods <a name="pods"></a>
+In this module we will look at how to secure a Kubernetes deployment using our web application with pod security context.  
+To run through the lab start [here](securing-our-pods/securing.md)
 
 ## Rbac, namespaces and cluster roles <a name="roles"></a>
 
