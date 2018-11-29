@@ -33,8 +33,6 @@ To run through the lab start [here](kubernetes-architecture/architecture.md)
 In this module we are going to look at securing all the kubernetes components with tls  
 To run through the lab start [here](securing-kubernetes-components/securing.md)
 
-## Introduction to Apparmor <a name="apparmor"></a>
-
 ## Securing our pods <a name="pods"></a>
 In this module we will look at how to secure a Kubernetes deployment using our web application with pod security context.  
 To run through the lab start [here](securing-our-pods/securing.md)
