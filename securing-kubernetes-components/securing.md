@@ -1,9 +1,13 @@
 # Securing kubernetes components
 
+In the last module we looked at the Kubernetes components. Now lets look at the minimum security profile we should implement tls communication.
 
-## Cheat sheet
+## Install
 
-### Install
+In the minikube and play with Kubernetes setups we are both using [kubeadm](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/)  
+In this course we are not going to run through kubeadm in great detail what we will run through is that it will do all the heavy lifting on the tls front for you    
+Below is the output of `kubeadm init` for one of my clusters. You will notice that it is setting up multiple CA's with different signing authority depending on the certificate  
+
 
 ```Initializing machine ID from random generator.
 [init] using Kubernetes version: v1.11.4
@@ -82,19 +86,28 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
   https://kubernetes.io/docs/concepts/cluster-administration/addons/
   ```
 
-  ### Cert locations 
-
+  
+  ## Cert locations 
+  
+  ### play with kubernetes 
   `/etc/kubernetes/pki/`
-
-  ### Manifest files
+  ### minikube
+  `/var/lib/minikube/certs/`  
+  
+  ## Manifest files
 
   `/etc/kubernetes/manifests`
 
-  ### Admin credentials
+  ## Admin credentials
 
   `/etc/kubernetes/admin.conf`
 
-  ### Kubelet systemd files
+  ## Kubelet systemd files
+  
+  ### play with kubernetes 
+  `/etc/systemd/system/kubelet.service`  
+  ### minikube
+  `/etc/systemd/system/kubelet.service.d/10-kubeadm.conf`
 
-  `/etc/systemd/system/kubelet.service`
-  `cat /etc/systemd/system/kubelet.service`
+  In this lab we are going to look at all these folders and files. If you are on play with kubernetes just use the web terminal.  
+  If you are using minikube issue `minikube ssh` to access the running vm

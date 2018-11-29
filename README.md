@@ -8,11 +8,10 @@
     3. [Play with Kubernetes](setup/play-with-k8s.md)
 3. [Kubernetes architecture overview ](#overview)
 4. [Securing Kubernetes components ](#components)
-5. [Introduction to Apparmor ](#apparmor)
-6. [Securing our pods](#pods)
-7. [Rbac, namespaces and cluster roles](#roles)
-8. [Introduction to knative](#knative)
-9. [Securing application communication with knative](#secknative)
+5. [Securing our pods](#pods)
+6. [Rbac, namespaces and cluster roles](#roles)
+7. [Introduction to knative](#knative)
+8. [Securing application communication with knative](#secknative)
 
 ## Introduction <a name="introduction"></a>
 This is the Kubernetes security workshop, we have three ways to run this workshop depending on the setup you have. You can run it on the cloud in Azure, locally via Minikube or on a low resource machine in Play with Kubernetes. 
@@ -31,6 +30,8 @@ This module walks through the Kubernetes components and gives us a solid foundat
 To run through the lab start [here](kubernetes-architecture/architecture.md)
 
 ## Securing Kubernetes components <a name="components"></a>
+In this module we are going to look at securing all the kubernetes components with tls  
+To run through the lab start [here](securing-kubernetes-components/securing.md)
 
 ## Introduction to Apparmor <a name="apparmor"></a>
 

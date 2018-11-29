@@ -1,2 +1,0 @@
-# Apparmor profile
-
