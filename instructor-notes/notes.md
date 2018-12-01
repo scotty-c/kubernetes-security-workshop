@@ -26,3 +26,8 @@ Again 5 - 10 mins
 
 8. Securing application communication with knative  
 This will take up the remander with questions 
+
+## Known issues
+
+On play with kubernetes I have seen knative not install sometimes due to pods being evicted. 
+If this happens fall back to minikube. I am going to raise this is the guys on the play with kubernetes project.
