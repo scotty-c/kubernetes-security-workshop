@@ -38,10 +38,17 @@ In this module we will look at how to secure a Kubernetes deployment using our w
 To run through the lab start [here](securing-our-pods/securing.md)
 
 ## Rbac, namespaces and cluster roles <a name="roles"></a>
+In this module we will take the application we deployed in pervious module but this time create a namespace and limit  
+the application to only have access to any resource in that namespace using service accounts, roles and role bindings.
+To run through the lab start [here](rbac-namespaces-cluterroles/namespaces.md)
 
 ## Introduction to knative <a name="knative"></a>
 
 ## Securing application communication with knative <a name="secknative"></a>
+
+
+### Instructors
+If you are giving this workshop there are some instructor notes [here](instructor-notes/notes.md)
 
 
 
