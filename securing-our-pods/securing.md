@@ -29,7 +29,7 @@ spec:
         ports:
         - containerPort: 3000
           hostPort: 3000
-EOF        
+EOF
 ```       
 Then we expose the deployment   
 `kubectl expose deployment webapp-deployment --type=LoadBalancer`  
