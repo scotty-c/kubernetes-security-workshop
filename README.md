@@ -49,7 +49,7 @@ To run through the lab start [here](introduction-into-knative/intro.md)
 
 ## Securing application communication with knative <a name="secknative"></a>
 In this module we will look at how to configure engress with istio  
-To run through the lab start [here](securing-application-communication-with-knative/intro.md)
+To run through the lab start [here](securing-application-communication-with-knative/istio.md)
 
 ### Instructors
 If you are giving this workshop there are some instructor notes [here](instructor-notes/notes.md)
