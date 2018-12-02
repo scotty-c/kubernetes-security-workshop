@@ -24,7 +24,7 @@ There are four methods to set up this workshop either to use in the classroom or
 [Play with Kubernetes](setup/play-with-k8s.md)
 
 Then familarise yourself with the application that we are going to [deploy](code/webapp/Dockerfile)  
-All the code lives [here](https://github.com/scotty-c/kubernetes-security-workshop/tree/master/code/webapp)
+All the code lives [here](code/webapp)
 
 ## Kubernetes architecture overview <a name="overview"></a>
 This module walks through the Kubernetes components and gives us a solid foundation for the rest of the workshop.    
