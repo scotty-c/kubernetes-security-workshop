@@ -17,7 +17,8 @@
 This is the Kubernetes security workshop, we have three ways to run this workshop depending on the setup you have. You can run it on the cloud in Azure, locally via Minikube or on a low resource machine in Play with Kubernetes. 
 
 ## Setup <a name="setup"></a>
-There are three methods to set up this workshop either to use in the classroom or after the workshop at your own pace. They are as follows  
+There are four methods to set up this workshop either to use in the classroom or after the workshop at your own pace. They are as follows  
+[Google Kubernetes Engine](setup/gke.md)  
 [Azure](setup/azure.md)  
 [Minikube](setup/minikube.md)  
 [Play with Kubernetes](setup/play-with-k8s.md)
