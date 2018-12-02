@@ -41,7 +41,7 @@ To run through the lab start [here](securing-our-pods/securing.md)
 ## Rbac, namespaces and cluster roles <a name="roles"></a>
 In this module we will take the application we deployed in pervious module but this time create a namespace and limit  
 the application to only have access to any resource in that namespace using service accounts, roles and role bindings.  
-To run through the lab start [here](rbac-namespaces-cluterroles/namespaces.md)
+To run through the lab start [here](rbac-namespaces-clusterroles/namespaces.md)
 
 ## Introduction to knative <a name="knative"></a>
 In this module we will look at what makes up knative   
