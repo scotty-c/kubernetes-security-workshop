@@ -22,6 +22,70 @@ kubectl label namespace default istio-injection=enabled
 kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/release.yaml
 ```
 
+# Deploy Sample App
+
+Let's deploy a simple app as a knative service:
+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: serving.knative.dev/v1alpha1 # Current version of Knative
+kind: Service
+metadata:
+  name: helloworld-go # The name of the app
+  namespace: default # The namespace the app will use
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: gcr.io/knative-samples/helloworld-go # The URL to the image of the app
+            env:
+            - name: TARGET # The environment variable printed out by the sample app
+              value: "Go Sample v1"
+EOF
+```
+
+Let's see what happened:
+
+```sh
+➜ kubectl get ksvc
+NAME            DOMAIN                              LATESTCREATED         LATESTREADY           READY   REASON
+helloworld-go   helloworld-go.default.example.com   helloworld-go-00001   helloworld-go-00001   True
+➜ kg config
+NAME            LATESTCREATED         LATESTREADY           READY   REASON
+helloworld-go   helloworld-go-00001   helloworld-go-00001   True
+➜ kubectl get rev
+NAME                  SERVICE NAME                  READY   REASON
+helloworld-go-00001   helloworld-go-00001-service   True
+➜  kubectl get pod
+NAME                                              READY   STATUS    RESTARTS   AGE
+helloworld-go-00001-deployment-7cbd588595-rdksw   3/3     Running   0          2m
+```
+
+To find the IP address for your service, enter:
+
+```sh
+➜ kubectl get svc knative-ingressgateway --namespace istio-system
+NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                                                                                                   AGE
+knative-ingressgateway   LoadBalancer   10.19.255.36   35.240.56.33   80:32380/TCP,443:32390/TCP,31400:32400/TCP,15011:30408/TCP,8060:32402/TCP,853:30616/TCP,15030:30291/TCP,15031:30636/TCP   1d
+```
+
+Take note of the EXTERNAL-IP address.
+
+You can also export the IP address as a variable with the following command:
+
+```sh
+export IP_ADDRESS=$(kubectl get svc knative-ingressgateway --namespace istio-system --output 'jsonpath={.status.loadBalancer.ingress[0].ip}')
+```
+
+Now let's try to send a request to the service:
+
+```sh
+curl -H "Host: helloworld-go.default.example.com" "http://${IP_ADDRESS}"
+Hello World: Go Sample v1!
+```
+
 # Configuring outbound network access
 
 Knative blocks all outbound traffic by default. To enable outbound access (when you want to connect 

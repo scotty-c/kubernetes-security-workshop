@@ -100,7 +100,11 @@ spec:
 EOF
 ```
 
-Then we can check our pods with `kubectl get pods --namespace=webapp-namespace`
+Then we can check our pods simulating the privileges of the service-account:
+
+`kubectl get pods --namespace=webapp-namespace --as system:serviceaccount:webapp-namespace:webapp-service-account`
+
+(Check [here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-subjects) for more info about rbac subjects)
 
 Now we have limited the blast radius of our application to only the namespace that it resides in. 
 So there will be no way that we can leak configmaps or secrets from other applications that are not in this namespace.

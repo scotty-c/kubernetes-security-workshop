@@ -9,7 +9,7 @@ These services have different responsibilities to cover to make the platform wor
 Now we have run the setup we can issue `kubectl get pods --namespace=kube-system` to look at what pods we have running    
 in the kube-system namepace. Each on of these pods equals a service. No lets break down what there responsibilities are.  
 
-## Controller node
+## Master node
 
 ### etcd 
 a simple, distributed key value storage which is used to store the Kubernetes cluster data (such as number of pods, their state, namespace, etc), API objects and service discovery details. It is only accessible from the API server for security reasons. etcd enables notifications to the cluster about configuration changes with the help of watchers. Notifications are API requests on each etcd cluster node to trigger the update of information in the node’s storage  

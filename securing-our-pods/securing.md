@@ -29,14 +29,30 @@ spec:
         ports:
         - containerPort: 3000
           hostPort: 3000
-EOF        
+EOF
 ```       
 Then we expose the deployment   
 `kubectl expose deployment webapp-deployment --type=LoadBalancer`  
 ### play with k8s
 We should have a button pop up that will allow us to click through to our application.  
 In the image below you can see mine has exposed `32185`  
-![console](images/button.png)  
+![console](images/button.png)
+
+NOTE: Current version of PWK has disabled the button feature. If you can't see it you can do the following:
+`kubectl get services` and copy the exposed port for your service.
+
+![exposedServices](images/exposedService.png)
+
+Don't worry the LoadBalancer EXTERNAL-IP is `<pending>` we don't use any external load balancer so we won't have any IP there. 
+
+Now copy the URL provided on the top of the page:
+
+![url](images/url.png)
+
+The service should then be exposed at the `URL:PORT` combination.
+
+e.g. `http://ip172-18-0-18-bg231u6fa44000dcjlng.direct.labs.play-with-k8s.com:32107`
+
 ### Minikube
 To find the nodes port on minikube we will issue the command `minikube service list`
 ```
