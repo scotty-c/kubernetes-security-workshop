@@ -15,7 +15,7 @@ curl -L https://github.com/knative/serving/releases/download/v0.2.0/release-lite
             | kubectl apply --filename -
 ```
 
-### Play with kubernetes
+### Play with kubernetes and Azure
 ```
 kubectl apply --filename https://raw.githubusercontent.com/knative/serving/v0.2.2/third_party/istio-1.0.2/istio.yaml
 kubectl label namespace default istio-injection=enabled

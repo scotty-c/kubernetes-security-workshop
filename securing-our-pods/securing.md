@@ -68,6 +68,10 @@ To find the nodes port on minikube we will issue the command `minikube service l
 
 For me I can access the app at `http://172.16.146.152:30687`
 
+### Azure 
+For Azure you can find the end point for the webapp with the following  
+`kubectl get services`
+
 ## The hack
 Now we have our application running, lets look at a few things.  
 Firstly we will get our pod name `kubectl get pods` mine is `webapp-deployment-865fb4d7c-8c5sv`   
