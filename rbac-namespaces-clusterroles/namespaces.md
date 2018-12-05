@@ -100,9 +100,36 @@ spec:
 EOF
 ```
 
-Then we can check our pods simulating the privileges of the service-account:
+Then we can check our pods simulating the privileges of the service-account we will set up our kubeconfig to only use our service account
+We will first get the secret for that service account  
+`SECRET_NAME=$(kubectl get sa webapp-service-account --namespace webapp-namespace -o json | jq -r .secrets[].name)`  
 
-`kubectl get pods --namespace=webapp-namespace --as system:serviceaccount:webapp-namespace:webapp-service-account`
+Then create a ca certificate 
+`kubectl get secret --namespace webapp-namespace "${SECRET_NAME}" -o json | jq -r '.data["ca.crt"]' | base64 --decode > ca.crt`
+
+Then get the user token from our secret
+`USER_TOKEN=$(kubectl get secret --namespace webapp-namespace "${SECRET_NAME}" -o json | jq -r '.data["token"]' | base64 --decode)`
+
+Now will will setup our kubeconfig file
+```
+context=$(kubectl config current-context)
+CLUSTER_NAME=$(kubectl config get-contexts "$context" | awk '{print $3}' | tail -n 1)
+ENDPOINT=$(kubectl config view -o jsonpath="{.clusters[?(@.name == \"${CLUSTER_NAME}\")].cluster.server}")
+kubectl config set-cluster "${CLUSTER_NAME}" --kubeconfig=admin.conf --server="${ENDPOINT}" --certificate-authority=ca.crt --embed-certs=true
+kubectl config set-credentials "webapp-service-account-webapp-namespace-${CLUSTER_NAME}" --kubeconfig=admin.conf --token="${USER_TOKEN}"
+kubectl config set-context "webapp-service-account-webapp-namespace-${CLUSTER_NAME}" --kubeconfig=admin.conf --cluster="${CLUSTER_NAME}" --user="webapp-service-account-webapp-namespace-${CLUSTER_NAME}" --namespace webapp-namespace
+kubectl config use-context "webapp-service-account-webapp-namespace-${CLUSTER_NAME}" --kubeconfig="${KUBECFG_FILE_NAME}"
+```
+note if you want to cheat there is a shell script [here](scripts/kubectl.sh)
+
+We will then load the file in our terminal
+`export KUBECONFIG=admin.conf`
+
+Now let's check our permissions by seeing if we can list pods in the default namespace
+`kubectl get pods`
+
+Now let's check our namespace
+`kubectl get pods --namespace=webapp-namespace`
 
 (Check [here](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-subjects) for more info about rbac subjects)
 
