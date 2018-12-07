@@ -168,7 +168,7 @@ $ openssl req -new -key alice.key -out alice.csr -subj "/CN=alice/O=myorg"
 ```
  Sign the **certificate** for `alice`:
  ```
-$ openssl x509 -req -in alice.csr -CA /etc/kubernetes/pki//ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out alice.crt -days 365
+$ openssl x509 -req -in alice.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out alice.crt -days 365
 ```
  # Create Alice Context in Kubectl
  Create `alice` User in `kubectl`:
