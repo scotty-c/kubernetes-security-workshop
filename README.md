@@ -18,7 +18,6 @@ This is the Kubernetes security workshop, we have three ways to run this worksho
 
 ## Setup <a name="setup"></a>
 There are four methods to set up this workshop either to use in the classroom or after the workshop at your own pace. They are as follows  
-[Google Kubernetes Engine](setup/gke.md)  
 [Azure](setup/azure.md)  
 [Minikube](setup/minikube.md)  
 [Play with Kubernetes](setup/play-with-k8s.md)
