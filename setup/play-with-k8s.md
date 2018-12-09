@@ -1,6 +1,6 @@
 # Play with Kubernetes
 
-To use the workshop with play with Kubernetes, firstly go to the website https://labs.play-with-k8s.com/.   
+To use the workshop with play with Kubernetes, firstly go to the website https://dockr.ly/dceu-kubernetes.   
 You will be greeted with a login page  
 ![login](images/play-with-k8s/login.png)  
 You will need to login with you DockerHub or GitHub account.   

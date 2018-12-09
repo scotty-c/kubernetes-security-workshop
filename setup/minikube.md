@@ -49,7 +49,7 @@ For Virtualbox
 ```
 minikube start --memory=8192 --cpus=4 \
   --kubernetes-version=v1.12.2 \
-  --vm-driver=hyperkit \
+  --vm-driver=virtualbox \
   --bootstrapper=kubeadm \
   --extra-config=apiserver.enable-admission-plugins="LimitRanger,NamespaceExists,NamespaceLifecycle,ResourceQuota,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook"
 ```  
