@@ -199,9 +199,9 @@ Retrieve Contexts:
 
 ```
 $ kubectl config get-contexts
-CURRENT NAME      CLUSTER   AUTHINFO  NAMESPACE
-*       kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
-        alice     minikube  alice     blue
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         alice                         kubernetes   alice
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
 ```
 Now lets change the kubectl context to use Alice 
 ```
