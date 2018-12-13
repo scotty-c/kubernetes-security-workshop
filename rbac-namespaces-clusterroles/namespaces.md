@@ -166,19 +166,24 @@ EOF
 Create a **private key** for `alice`:
 
 ```
-$ openssl genrsa -out alice.key 2048
+openssl genrsa -out alice.key 2048
 ```
 
 Create **certificate sign request** for `alice`:
 
 ```
-$ openssl req -new -key alice.key -out alice.csr -subj "/CN=alice/O=myorg"
+openssl req -new -key alice.key -out alice.csr -subj "/CN=alice/O=myorg"
 ```
 
 Sign the **certificate** for `alice`:
 
+### Play with Kubernetes
 ```
-$ openssl x509 -req -in alice.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out alice.crt -days 365
+openssl x509 -req -in alice.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out alice.crt -days 365
+```
+### Minikube
+```
+openssl x509 -req -in alice.csr -CA ~/.minikube/ca.crt -CAkey ~/.minikube/ca.key -CAcreateserial -out alice.crt -days 365
 ```
 
 # Create Alice Context in Kubectl
@@ -191,10 +196,21 @@ kubectl config set-credentials alice --client-certificate="$(pwd)/alice.crt"  --
 
 Create `alice` Context in `kubectl`:
 
+### Play with Kubernetes
 ```
 kubectl config set-context alice --cluster=kubernetes --user=alice
 ```
+### Minikube
 
+Firstly get your minikube cluster ip address 
+```
+echo $(minikube ip)
+```
+Then use the ip as the address in the server flag. Mine is `192.168.99.100`
+```
+kubectl config set-context alice --cluster=minikube --server=https://192.168.99.100:8443 --user=alice
+
+```
 Retrieve Contexts:
 
 ```
