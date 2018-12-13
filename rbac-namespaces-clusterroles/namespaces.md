@@ -203,7 +203,7 @@ CURRENT NAME      CLUSTER   AUTHINFO  NAMESPACE
 *       kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
         alice     minikube  alice     blue
 ```
-Now lets change to use Alice 
+Now lets change the kubectl context to use Alice 
 ```
 kubectl config use-context alice
 ```
