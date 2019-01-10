@@ -10,8 +10,8 @@
 4. [Securing Kubernetes components ](#components)
 5. [Securing our pods](#pods)
 6. [Rbac, namespaces and cluster roles](#roles)
-7. [Introduction to knative](#knative)
-8. [Securing application communication with knative](#secknative)
+7. [Introduction to istio](#istio)
+8. [Securing application communication with istio](#secistio)
 
 ## Introduction <a name="introduction"></a>
 This is the Kubernetes security workshop, we have three ways to run this workshop depending on the setup you have. You can run it on the cloud in Azure, locally via Minikube or on a low resource machine in Play with Kubernetes. 
@@ -42,13 +42,13 @@ In this module we will take the application we deployed in pervious module but t
 the application to only have access to any resource in that namespace using service accounts, roles and role bindings.  
 To run through the lab start [here](rbac-namespaces-clusterroles/namespaces.md)
 
-## Introduction to knative <a name="knative"></a>
-In this module we will look at what makes up knative   
-To run through the lab start [here](introduction-into-knative/intro.md)
+## Introduction to istio <a name="istio"></a>
+In this module we will look at what makes up istio   
+To run through the lab start [here](introduction-into-istio/intro.md)
 
-## Securing application communication with knative <a name="secknative"></a>
+## Securing application communication with istio <a name="secistio"></a>
 In this module we will look at how to configure engress with istio  
-To run through the lab start [here](securing-application-communication-with-knative/istio.md)
+To run through the lab start [here](securing-application-communication-with-istio/istio.md)
 
 ### Instructors
 If you are giving this workshop there are some instructor notes [here](instructor-notes/notes.md)
