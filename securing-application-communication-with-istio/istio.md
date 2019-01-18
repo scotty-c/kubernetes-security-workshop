@@ -1,11 +1,11 @@
 # Securing application communication with knative
 
-# Installing istio 
+# Installing istio
 
 To install istio run the following from the root of the repo that you have cloned
 
 ```
-./securing-application-communication-with-istio/scripts/istio.sh 
+./securing-application-communication-with-istio/scripts/istio.sh
 ```
 
 To view the script click [here](scripts/istio.sh)
@@ -16,11 +16,12 @@ We are going to enable grafana, tracing and [kiali](https://github.com/kiali/kia
 # Checking istio is installed correctly
 
 Before we move on we want to make sure that istio in installed and running correctly.
-We will do that by issuing 
+We will do that by issuing
 
 `kubectl get svc -n istio-system`
 
 The output should look like
+### Azure
 ```
 $ kubectl get svc -n istio-system
 NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                                                                                                                   AGE
@@ -42,8 +43,32 @@ tracing                  ClusterIP      10.0.162.108   <none>         80/TCP    
 zipkin                   ClusterIP      10.0.221.151   <none>         9411/TCP                                                                                                                  1d
 
 ```
-and also `kubectl get pods -n istio-system`  
-and we should see all the pods as running  
+
+### Minikube
+```
+$ kubectl get svc -n istio-system
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                   AGE
+grafana                  ClusterIP      10.105.190.50    <none>        3000/TCP                                                                                                                  19m
+istio-citadel            ClusterIP      10.108.71.131    <none>        8060/TCP,9093/TCP                                                                                                         19m
+istio-egressgateway      ClusterIP      10.97.180.125    <none>        80/TCP,443/TCP                                                                                                            19m
+istio-galley             ClusterIP      10.110.109.224   <none>        443/TCP,9093/TCP                                                                                                          19m
+istio-ingressgateway     LoadBalancer   10.109.197.49    <pending>     80:31380/TCP,443:31390/TCP,31400:31400/TCP,15011:31809/TCP,8060:31143/TCP,853:31762/TCP,15030:31549/TCP,15031:31332/TCP   19m
+istio-pilot              ClusterIP      10.107.101.198   <none>        15010/TCP,15011/TCP,8080/TCP,9093/TCP                                                                                     19m
+istio-policy             ClusterIP      10.97.27.29      <none>        9091/TCP,15004/TCP,9093/TCP                                                                                               19m
+istio-sidecar-injector   ClusterIP      10.111.80.115    <none>        443/TCP                                                                                                                   19m
+istio-telemetry          ClusterIP      10.96.180.26     <none>        9091/TCP,15004/TCP,9093/TCP,42422/TCP                                                                                     19m
+jaeger-agent             ClusterIP      None             <none>        5775/UDP,6831/UDP,6832/UDP                                                                                                19m
+jaeger-collector         ClusterIP      10.111.234.21    <none>        14267/TCP,14268/TCP                                                                                                       19m
+jaeger-query             ClusterIP      10.110.117.50    <none>        16686/TCP                                                                                                                 19m
+kiali                    ClusterIP      10.107.254.72    <none>        20001/TCP                                                                                                                 19m
+prometheus               ClusterIP      10.105.165.152   <none>        9090/TCP                                                                                                                  19m
+tracing                  ClusterIP      10.108.162.245   <none>        80/TCP                                                                                                                    19m
+zipkin                   ClusterIP      10.103.129.249   <none>        9411/TCP                                                                                                                  19m
+```
+__NOTE:__ Because we are not using an external load balancer, the EXTERNAL-IP for the `istio-intressgateway` will remain as pending.
+
+and also `kubectl get pods -n istio-system`
+and we should see all the pods as running
 ```
 $ kubectl get pods -n istio-system
 NAME                                      READY   STATUS    RESTARTS   AGE
@@ -60,22 +85,21 @@ istio-tracing-7596597bd7-vffz6            1/1     Running   0          1d
 kiali-5fbd6ffb-6qqfn                      1/1     Running   0          1d
 prometheus-76db5fddd5-s7dth               1/1     Running   0          1d
 ```
-We can also check the ip address of the ingress gateway with  
-`kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`  
 
-We will create a new namespace just for this application. To do that we will use the below command  
+We will create a new namespace just for this application. To do that we will use the below command
 `kubectl create namespace istio-app`
 
-Once all our pods are up and running we will set istio to automatically inject the side car information to envoy  
+Once all our pods are up and running we will set istio to automatically inject the side car information to envoy
 `kubectl label namespace istio-app istio-injection=enabled`
 
-If you wanted to do that manually with every application deployment you could use this  
-`istioctl kube-inject -f <your-app-spec>.yaml | kubectl apply -f -`  
+If you wanted to do that manually with every application deployment you could use this
+`istioctl kube-inject -f <your-app-spec>.yaml | kubectl apply -f -`
 
-# Mutual TLS 
-I think the bear minimum that we need to class an application as secure is mutual TLS through the back end.  
-The beauty of istio is that it will handle the heavy lifting for you and implement it without having to change your application.  
-So let's test this out.  
+
+# Mutual TLS
+I think the bear minimum that we need to class an application as secure is mutual TLS through the back end.
+The beauty of istio is that it will handle the heavy lifting for you and implement it without having to change your application.
+So let's test this out.
 
 We will enable mutual TLS across our `istio-app` namespace
 
@@ -104,36 +128,36 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
-EOF      
-```      
+EOF
+```
 
-# Deploying a service to Kubernetes 
+# Deploying a service to Kubernetes
 
-We are just going to use the sample application that istio gives us. This is a really good place to start.  
-Its also freely available so you can use it again in your own free time after this course.  
+We are just going to use the sample application that istio gives us. This is a really good place to start.
+Its also freely available so you can use it again in your own free time after this course.
 
-Here is the architecture of the application  
-![app](https://istio.io/docs/examples/bookinfo/withistio.svg)  
+Here is the architecture of the application
+![app](https://istio.io/docs/examples/bookinfo/withistio.svg)
 
-We will namespace our application again in the namespace we created earlier called `istio-app`  
+We will namespace our application again in the namespace we created earlier called `istio-app`
 
-To deploy the application we will use the files that our install script pulled down for us.  
+To deploy the application we will use the files that our install script pulled down for us.
 `kubectl create -n istio-app -f istio-1.0.4/samples/bookinfo/platform/kube/bookinfo.yaml`
 
-We can check the state of our services with  
-`kubectl get services -n istio-app`  
-We should get something like 
+We can check the state of our services with
+`kubectl get services -n istio-app`
+We should get something like
 ```
 NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
 details       ClusterIP   10.0.160.215   <none>        9080/TCP   36s
 productpage   ClusterIP   10.0.254.103   <none>        9080/TCP   33s
 ratings       ClusterIP   10.0.241.132   <none>        9080/TCP   35s
 reviews       ClusterIP   10.0.254.18    <none>        9080/TCP   35s
-```  
+```
 
-and our pods with   
-`kubectl get pods -n istio-app`   
-with an output of  
+and our pods with
+`kubectl get pods -n istio-app`
+with an output of
 ```
 NAME                             READY   STATUS    RESTARTS   AGE
 details-v1-6764bbc7f7-b9p9j      2/2     Running   0          5m
@@ -143,7 +167,7 @@ reviews-v1-fdbf674bb-plpk9       2/2     Running   0          5m
 reviews-v2-5bdc5877d6-9xhvd      2/2     Running   0          5m
 reviews-v3-dd846cc78-9fgwj       2/2     Running   0          5m
 ```
-At this point we have all our services up and running but istio is not exposing them to the outside world as we have not defined a virtual service to define how to route our traffic. To do that we can use the below yaml file  
+At this point we have all our services up and running but istio is not exposing them to the outside world as we have not defined a virtual service to define how to route our traffic. To do that we can use the below yaml file
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: networking.istio.io/v1alpha3
@@ -172,8 +196,8 @@ spec:
         port:
           number: 9080
 EOF
-```  
-Now we will attach the virtual service to the default ingress gateway.  
+```
+Now we will attach the virtual service to the default ingress gateway.
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: networking.istio.io/v1alpha3
@@ -193,16 +217,38 @@ spec:
     - "*"
 EOF
 ```
-Now to test our application is working. Can do this with a curl command  
-`curl -o /dev/null -s -w "%{http_code}\n" http://$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')/productpage`  
+Now to test our application is working. Get the correct URL for your environment:
 
-or in your browser by getting your ingress ip  
-`kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`  
+### Azure
+Find the IP address of the loadbalancer and assign to the GATEWAY_URL
+`export GATEWAY_URL=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-and using that ip with productpage to route to the correct page. my ip was `137.117.92.142` so the url will be `http://137.117.92.142/productpage`  
+### Minikube
+
+Find the ingress port for our application
+`export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')`
+
+Find the ip of our cluster
+`export INGRESS_HOST=$(minikube ip)`
+
+and assign them to the GATEWAY_URL
+`export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT`
+
+We can now test if our application is running correctly by running the following command:
+```curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+200
+```
+
+or in your browser by using the address in the GATEWAY_URL variable
+`echo $GATEWAY_URL
+137.117.92.142
+`
+and using that ip with productpage to route to the correct page. my ip was `137.117.92.142` so the url will be `http://137.117.92.142/productpage`
 ![browser](images/browser.png)
 
-To check if mutual TLS is set up correctly we can use `istioctl authn tls-check | grep .istio-app.svc.cluster.local`  
+
+
+To check if mutual TLS is set up correctly we can use `istioctl authn tls-check | grep .istio-app.svc.cluster.local`
 
 With an output of
 ```
@@ -212,19 +258,19 @@ ratings.istio-app.svc.cluster.local:9080         OK           mTLS       mTLS   
 reviews.istio-app.svc.cluster.local:9080         OK           mTLS       mTLS       default/istio-app         default/istio-app
 ```
 
-Now to test the backed we will need a container in that namespace with a bash shell.    
-For that we will use the envoy sidecar container and we will get shell inside the container with the following command  
+Now to test the backed we will need a container in that namespace with a bash shell.
+For that we will use the envoy sidecar container and we will get shell inside the container with the following command
 ```
 export POD_NAME=$(kubectl get pods --namespace=istio-app | grep details | cut -d' ' -f1)
 kubectl exec -n istio-app -it $POD_NAME -c istio-proxy /bin/bash
 
 ```
-Now we have a shell lets see if we can hit a service. 
-`curl -k -v http://details:9080/details/0`   
-we will use the ratings service. Kubernetes will be able to find the service internally  
+Now we have a shell lets see if we can hit a service.
+`curl -k -v http://details:9080/details/0`
+we will use the ratings service. Kubernetes will be able to find the service internally
 via DNS service discovery using the service name `details`
 
-We would have found that we dont have access to the application and got an output similar to this  
+We would have found that we dont have access to the application and got an output similar to this
 ```
 *   Trying 10.0.175.68...
 * Connected to details (10.0.175.68) port 9080 (#0)
@@ -232,29 +278,29 @@ We would have found that we dont have access to the application and got an outpu
 > Host: details:9080
 > User-Agent: curl/7.47.0
 > Accept: */*
-> 
+>
 * Recv failure: Connection reset by peer
 * Closing connection 0
 curl: (56) Recv failure: Connection reset by peer
 ```
 
-Now lets get try tcpdump to see what is happening. First we will need the ip address of `eth0`  
-You can easily get tht from `ifconfig` my output was 
+Now lets get try tcpdump to see what is happening. First we will need the ip address of `eth0`
+You can easily get tht from `ifconfig` my output was
 ```
-eth0      Link encap:Ethernet  HWaddr 16:a0:0d:08:ca:09  
+eth0      Link encap:Ethernet  HWaddr 16:a0:0d:08:ca:09
           inet addr:10.244.0.9  Bcast:0.0.0.0  Mask:255.255.255.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
           RX packets:7087 errors:0 dropped:0 overruns:0 frame:0
           TX packets:7426 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0 
+          collisions:0 txqueuelen:0
           RX bytes:1714389 (1.7 MB)  TX bytes:67897634 (67.8 MB)
 ```
-So my ip address is `10.244.0.9`    
-Now we know the port for the traffic we want to capture is `9080` from the curl above.  
-So tcpdump command will be  
+So my ip address is `10.244.0.9`
+Now we know the port for the traffic we want to capture is `9080` from the curl above.
+So tcpdump command will be
 `sudo tcpdump -vvv -A -i  eth0 '((dst port 9080) and (net 10.244.0.9))'`
 
-Then in another terminal lets hit our web front end with will call our details service.  
+Then in another terminal lets hit our web front end with will call our details service.
 `curl -o /dev/null -s -w "%{http_code}\n" http://$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')/productpage`
 
 The out put should have been something like
