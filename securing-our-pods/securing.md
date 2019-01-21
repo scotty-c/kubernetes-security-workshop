@@ -100,7 +100,7 @@ bang for your buck on the security front, this is the place to start.
 
 ### Change the user the application runs as
 
-We will change our deployment.yaml this time to set the user to a random user 100. This will make sure that we dont have matching  
+We will change our deployment.yaml this time to set the user to a random user 1000. This will make sure that we dont have matching  
 uid to the underlying host.
 
 ```
