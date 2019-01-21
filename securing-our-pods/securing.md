@@ -77,7 +77,7 @@ Now we have our application running, lets look at a few things.
 Firstly we will get our pod name `kubectl get pods` mine is `webapp-deployment-865fb4d7c-8c5sv`   
 We will then exec into the running container  `kubectl exec -it webapp-deployment-865fb4d7c-8c5sv sh`  
 The `cd static` and `vim index.html`  
-replace the gif link in line 19 with `https://media.giphy.com/media/DBfYJqH5AokgM/giphy.gif`  
+replace the gif link in line 16 with `https://media.giphy.com/media/DBfYJqH5AokgM/giphy.gif`  
 
 Now check your browser !!!
 
