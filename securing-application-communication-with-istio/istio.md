@@ -267,7 +267,7 @@ kubectl exec -n istio-app -it $POD_NAME -c istio-proxy /bin/bash
 ```
 Now we have a shell lets see if we can hit a service.
 `curl -k -v http://details:9080/details/0`
-we will use the ratings service. Kubernetes will be able to find the service internally
+we will use the details service. Kubernetes will be able to find the service internally
 via DNS service discovery using the service name `details`
 
 We would have found that we dont have access to the application and got an output similar to this
