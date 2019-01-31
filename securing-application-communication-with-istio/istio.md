@@ -221,7 +221,7 @@ Now to test our application is working. Get the correct URL for your environment
 
 ### Azure
 Find the IP address of the loadbalancer and assign to the GATEWAY_URL
-`export GATEWAY_URL=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+`export GATEWAY_URL=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')`
 
 ### Minikube
 
