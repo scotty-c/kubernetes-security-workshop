@@ -1,4 +1,4 @@
-# Securing application communication with knative
+# Securing application communication with Istio
 
 # Installing istio
 
