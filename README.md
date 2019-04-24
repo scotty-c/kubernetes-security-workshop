@@ -13,6 +13,8 @@
 7. [Introduction to istio](#istio)
 8. [Securing application communication with istio](#secistio)
 
+The slides can be found [here](slides/securing-kubernetes-dockercon.pdf)
+
 ## Introduction <a name="introduction"></a>
 This is the Kubernetes security workshop, we have three ways to run this workshop depending on the setup you have. You can run it on the cloud in Azure, locally via Minikube or on a low resource machine in Play with Kubernetes. 
 
