@@ -14,11 +14,11 @@ To create a instance press the `add new instance` button on the top left corner.
 ![terminal](images/play-with-k8s/terminal.png)  
 
 Run the following commands in the terminal  
-`kubeadm init --apiserver-advertise-address $(hostname -i) --pod-network-cidr=192.168.0.0/16` to initalize the controller.
+`kubeadm init --apiserver-advertise-address $(hostname -i)` to initalize the controller.
 
 ```
-kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
-kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+kubectl apply -n kube-system -f \
+    "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 |tr -d '\n')"
 ```
 to install the calico network provider.  
 
@@ -44,5 +44,8 @@ We will then just check the status of our running pods.To do that we will issue 
 ![get-pods](images/play-with-k8s/get-pods.png)  
 
 All our pods should be running with nothing pending or in crashloop.
+
+Last step lets install tmux as we will need that later
+`yum install tmux`
 
 Now your setup is all complete.
