@@ -44,7 +44,7 @@ zipkin                   ClusterIP      10.0.221.151   <none>         9411/TCP  
 
 ```
 
-### Minikube
+### Minikube and Play with k8s
 ```
 $ kubectl get svc -n istio-system
 NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                   AGE
@@ -234,6 +234,17 @@ Find the ip of our cluster
 and assign them to the GATEWAY_URL
 `export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT`
 
+### Play with k8s
+Find the ingress port for our application
+`kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'`
+
+Now we need the play with k8s controller url to hit the ingress gateway.
+for example
+`ip172-18-0-4-bivq19oj98i0009oq2g0.direct.workshop.play-with-k8s.com`
+
+Then to get to the application we tie it all together adding the url and port.
+`http://ip172-18-0-4-bivq19oj98i0009oq2g0.direct.workshop.play-with-k8s.com:31380/productpage`
+
 We can now test if our application is running correctly by running the following command:
 ```
 curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
@@ -302,8 +313,17 @@ Now we know the port for the traffic we want to capture is `9080` from the curl 
 So tcpdump command will be
 `sudo tcpdump -vvv -A -i  eth0 '((dst port 9080) and (net 10.244.0.9))'`
 
+### Minikube and Azure
+
 Then in another terminal lets hit our web front end with will call our details service.
 `curl -o /dev/null -s -w "%{http_code}\n" http://$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')/productpage`
+
+### Play with k8s
+
+PLEASE NOTE !!! you will need to replace the below url with your url you can hit your version of the application on.
+
+Then in another terminal lets hit our web front end with will call our details service.
+`curl -o /dev/null -s -w "%{http_code}\n" http://ip172-18-0-4-bivq19oj98i0009oq2g0.direct.workshop.play-with-k8s.com:31380/productpage`
 
 The out put should have been something like
 ```
