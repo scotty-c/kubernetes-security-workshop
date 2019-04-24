@@ -235,7 +235,9 @@ and assign them to the GATEWAY_URL
 `export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT`
 
 We can now test if our application is running correctly by running the following command:
-```curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+```
+curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+
 200
 ```
 
