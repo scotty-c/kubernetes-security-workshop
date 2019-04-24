@@ -311,7 +311,10 @@ eth0      Link encap:Ethernet  HWaddr 16:a0:0d:08:ca:09
 So my ip address is `10.244.0.9`
 Now we know the port for the traffic we want to capture is `9080` from the curl above.
 So tcpdump command will be
-`sudo tcpdump -vvv -A -i  eth0 '((dst port 9080) and (net 10.244.0.9))'`
+```
+IP=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+sudo tcpdump -vvv -A -i eth0 '((dst port 9080) and (net $IP))'
+```
 
 ### Minikube and Azure
 
