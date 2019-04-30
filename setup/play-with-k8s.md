@@ -46,6 +46,6 @@ We will then just check the status of our running pods.To do that we will issue 
 All our pods should be running with nothing pending or in crashloop.
 
 Last step lets install tmux as we will need that later
-`yum install tmux vim -y`
+`yum install tmux vim openssl -y`
 
 Now your setup is all complete.
