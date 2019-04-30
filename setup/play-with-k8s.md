@@ -20,7 +20,7 @@ Run the following commands in the terminal
 kubectl apply -n kube-system -f \
     "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 |tr -d '\n')"
 ```
-to install the calico network provider.  
+to install the weave network provider.  
 
 You will get an output from the terminal like the following `kubeadm join 192.168.0.13:6443 --token t4r35x.ekzswc2rigtldf2f --discovery-token-ca-cert-hash sha256:2de71debb1e103989a8c4619e7bc7799e48ebdc71fb2623c1d17857a33e71f5b`  
 This is used to join worker nodes to the cluster. PLEASE NOTE !!!! Do not copy and paste the join token above it will not work on your cluster. Use the join token outputed on your terminal.  
