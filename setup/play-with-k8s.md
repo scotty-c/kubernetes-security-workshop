@@ -45,6 +45,9 @@ We will then just check the status of our running pods.To do that we will issue 
 
 All our pods should be running with nothing pending or in crashloop.
 
+Now lets git clone the repo  
+`git clone https://github.com/scotty-c/kubernetes-security-workshop.git`  
+
 Last step lets install tmux as we will need that later
 `yum install tmux vim openssl -y`
 
