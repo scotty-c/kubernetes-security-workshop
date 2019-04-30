@@ -225,13 +225,3 @@ kubectl config use-context alice
 ```
 
 For a test now use this context and see what you have access to.
-
-
-# clean up  
-
-```
-kubectl delete -n webapp-namespace deployments.apps webapp-deployment
-kubectl delete -n webapp-namespace rolebindings.rbac.authorization.k8s.io webapp-role-binding
-kubectl delete -n webapp-namespace roles.rbac.authorization.k8s.io webapp-role 
-kubectl delete -n webapp-namespace serviceaccounts webapp-service-account
-```
