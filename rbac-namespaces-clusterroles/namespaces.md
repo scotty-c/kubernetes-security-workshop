@@ -122,7 +122,7 @@ kubectl config use-context "webapp-service-account-webapp-namespace-${CLUSTER_NA
 ```
 note if you want to cheat there is a shell script [here](scripts/kubectl.sh)
 
-We will then load the file in our terminal
+We will then load the file in our terminal, make sure you use tmux or a seperate terminal
 `export KUBECONFIG=admin.conf`
 
 Now let's check our permissions by seeing if we can list pods in the default namespace
