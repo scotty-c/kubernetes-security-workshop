@@ -49,6 +49,6 @@ Now lets git clone the repo
 `git clone https://github.com/scotty-c/kubernetes-security-workshop.git`  
 
 Last step lets install tmux as we will need that later
-`yum install tmux vim openssl -y`
+`yum install tmux vim openssl sudo -y`
 
 Now your setup is all complete.
