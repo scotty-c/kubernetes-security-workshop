@@ -70,7 +70,7 @@ done
 }
 
 install () {
-echo "Deplying istio"
+echo "Deploying istio"
 
 helm install istio-$ISTIO_VERSION/install/kubernetes/helm/istio --name istio --namespace istio-system \
     --set global.controlPlaneSecurityEnabled=true \
